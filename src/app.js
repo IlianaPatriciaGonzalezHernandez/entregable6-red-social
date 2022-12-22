@@ -1,15 +1,15 @@
 //? Dependencies
 const express = require('express')
 const cors = require('cors')
-
+const swaggerUI = require('swagger-ui-express')
 //? Files
+const swaggerDoc = require('./swagger.json')
 const config = require('../config')
 const db = require('./utils/database')
 const initModels = require('./models/initModels')
 const userRouter = require('./users/users.router')
 const authRouter = require('./auth/auth.router')
 const postRouter = require('./post/posts.router')
-
 const followRouter = require('./follows/follows.router')
 
 //? Initial Configs
@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1', followRouter)
-
+app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/post', postRouter)
